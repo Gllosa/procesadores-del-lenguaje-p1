@@ -24,7 +24,7 @@ literals = ['=', '+', '-', '*', '/', '(', ')']
 
 t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
-t_COMMENT = r'%%.*\n'
+t_COMMENT = r'%%.*'
 
 
 def t_NONDECIMAL(t):
@@ -44,9 +44,6 @@ def t_SCIENTIFIC(t):
 
 def t_FLOAT(t):
     r'[+-]?([0-9]*[.])?[0-9]+'
-    # if t.value[0] == '.':
-    #    t.value = float('0.' + t.value[1:-1])
-    #    return t
     t.value = float(t.value)
     return t
 
@@ -83,7 +80,6 @@ precedence = (
 
 # dictionary of names
 names = {}
-
 
 def p_statement_assign(p):
     'statement : NAME "=" expression'
@@ -184,12 +180,15 @@ fname = "\input.txt"
 
 try:
     f = open(ROOT_DIR + fname, 'r')
-    lines = ''.join(f.readlines())
-    print(lines)
     yacc.parse(f.read())
 except IOError:
     print("Archivo no encontrado:", fname)
 
+# Código que funciona
+# try:
+#     f = open(ROOT_DIR + fname, 'r')
+# except IOError:
+#     print("Archivo no encontrado:", fname)
 # while 1:
 #     try:
 #         s = f.readline()
