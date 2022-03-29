@@ -5,6 +5,9 @@
 # "Lex and Yacc", p. 63.
 # -----------------------------------------------------------------------------
 
+import os
+import ply.yacc as yacc
+import ply.lex as lex
 import sys
 sys.path.insert(0, "../..")
 
@@ -23,6 +26,7 @@ t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
 t_COMMENT = r'%%.*\n'
 
+
 def t_NONDECIMAL(t):
     r'[0][O|o|X|x]\d+'
     if t.value[1] == "O" or t.value[1] == "o":
@@ -31,18 +35,21 @@ def t_NONDECIMAL(t):
         t.value = int(t.value[2:len(t.value)], 16)
     return t
 
+
 def t_SCIENTIFIC(t):
     r'[+-]?([0-9]*[.])?[0-9]+[e][+-]?([0-9]*[.])?[0-9]+'
     t.value = float(t.value)
     return t
 
+
 def t_FLOAT(t):
     r'[+-]?([0-9]*[.])?[0-9]+'
-    #if t.value[0] == '.':
+    # if t.value[0] == '.':
     #    t.value = float('0.' + t.value[1:-1])
     #    return t
     t.value = float(t.value)
     return t
+
 
 def t_NUMBER(t):
     r'\d+'
@@ -50,8 +57,8 @@ def t_NUMBER(t):
     return t
 
 
-
 t_ignore = " \t"
+
 
 def t_newline(t):
     r'\n+'
@@ -64,7 +71,6 @@ def t_error(t):
 
 
 # Build the lexer
-import ply.lex as lex
 lex.lex()
 
 # Parsing rules
@@ -89,13 +95,16 @@ def p_statement_expr(p):
     if p[1] is not None:
         print(p[1])
 
+
 def p_statement_comment(p):
     'statement : COMMENT'
     pass
 
+
 def p_expression_comment(p):
     'expression : COMMENT'
     p[0] = p[1]
+
 
 def p_expression_binop(p):
     '''expression : expression '+' expression
@@ -116,6 +125,7 @@ def p_expression_uplus(p):
     "expression : '+' expression"
     p[0] = p[2]
 
+
 def p_expression_uminus(p):
     "expression : '-' expression %prec UMINUS"
     p[0] = -p[2]
@@ -125,17 +135,21 @@ def p_expression_group(p):
     "expression : '(' expression ')'"
     p[0] = p[2]
 
+
 def p_expression_scientific(p):
     "expression : SCIENTIFIC"
     p[0] = p[1]
+
 
 def p_expression_float(p):
     "expression : FLOAT"
     p[0] = p[1]
 
+
 def p_expression_number(p):
     "expression : NUMBER"
     p[0] = p[1]
+
 
 def p_expression_nondecimal(p):
     "expression : NONDECIMAL"
@@ -150,9 +164,11 @@ def p_expression_name(p):
         print("Undefined name '%s'" % p[1])
         p[0] = 0
 
+
 def p_expression_comment_same_line(p):
     "expression : expression COMMENT"
     print(p[1])
+
 
 def p_error(p):
     if p:
@@ -160,14 +176,14 @@ def p_error(p):
     else:
         print("Syntax error at EOF")
 
-import ply.yacc as yacc
+
 yacc.yacc()
 
-import sys
-fname = "input.txt"
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+fname = "\input.txt"
 
 try:
-    f = open(fname, 'r')
+    f = open(ROOT_DIR + fname, 'r')
     lines = ''.join(f.readlines())
     print(lines)
     yacc.parse(f.read())
