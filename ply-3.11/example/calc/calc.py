@@ -9,13 +9,15 @@ import os
 import ply.yacc as yacc
 import ply.lex as lex
 import sys
+import math
+
 sys.path.insert(0, "../..")
 
 if sys.version_info[0] >= 3:
     raw_input = input
 
 tokens = (
-    'NAME', 'NUMBER', 'COMMENT', 'FLOAT', 'SCIENTIFIC', 'NONDECIMAL'
+    'NAME', 'NUMBER', 'COMMENT', 'FLOAT', 'SCIENTIFIC', 'NONDECIMAL', 'SIN'
 )
 
 literals = ['=', '+', '-', '*', '/', '(', ')']
@@ -26,6 +28,11 @@ t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
 t_COMMENT = r'%%.*'
 
+
+def t_SIN(t):
+    r'sin[(][+-]?([0-9]*[.])?[0-9]+[)]'
+    t.value = math.sin(float(t.value[4:len(t.value)-1]))
+    return t
 
 def t_NONDECIMAL(t):
     r'[0][O|o|X|x]\d+'
@@ -81,13 +88,14 @@ precedence = (
 # dictionary of names
 names = {}
 
+
 def p_statement_assign(p):
     'statement : NAME "=" expression'
     names[p[1]] = p[3]
 
 
 def p_statement_expr(p):
-    'statement : expression '
+    'statement : expression'
     if p[1] is not None:
         print(p[1])
 
@@ -95,11 +103,6 @@ def p_statement_expr(p):
 def p_statement_comment(p):
     'statement : COMMENT'
     pass
-
-
-def p_expression_comment(p):
-    'expression : COMMENT'
-    p[0] = p[1]
 
 
 def p_expression_binop(p):
@@ -136,6 +139,10 @@ def p_expression_scientific(p):
     "expression : SCIENTIFIC"
     p[0] = p[1]
 
+
+def p_expression_sin(p):
+    "expression : SIN"
+    p[0] = p[1]
 
 def p_expression_float(p):
     "expression : FLOAT"
@@ -178,22 +185,23 @@ yacc.yacc()
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 fname = "\input.txt"
 
-try:
-    f = open(ROOT_DIR + fname, 'r')
-    yacc.parse(f.read())
-except IOError:
-    print("Archivo no encontrado:", fname)
-
-# Código que funciona
 # try:
 #     f = open(ROOT_DIR + fname, 'r')
+#     # print(f.readlines())
+#     yacc.parse("".join(f.readlines()))
 # except IOError:
 #     print("Archivo no encontrado:", fname)
-# while 1:
-#     try:
-#         s = f.readline()
-#     except EOFError:
-#         break
-#     if not s:
-#         break
-#     yacc.parse(s)
+
+# Código que funciona
+try:
+    f = open(ROOT_DIR + fname, 'r')
+except IOError:
+    print("Archivo no encontrado:", fname)
+while 1:
+    try:
+        s = f.readline()
+    except EOFError:
+        break
+    if not s:
+        break
+    yacc.parse(s)

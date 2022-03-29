@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'left+-left*/rightUMINUSCOMMENT FLOAT NAME NONDECIMAL NUMBER SCIENTIFICstatement : NAME "=" expressionstatement : expression statement : COMMENTexpression : COMMENTexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expressionexpression : \'+\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : SCIENTIFICexpression : FLOATexpression : NUMBERexpression : NONDECIMALexpression : NAMEexpression : expression COMMENT'
+_lr_signature = 'left+-left*/rightUMINUSCOMMENT FLOAT NAME NONDECIMAL NUMBER SCIENTIFIC SINstatement : NAME "=" expressionstatement : expressionstatement : COMMENTexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expressionexpression : \'+\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : SCIENTIFICexpression : SINexpression : FLOATexpression : NUMBERexpression : NONDECIMALexpression : NAMEexpression : expression COMMENT'
     
-_lr_action_items = {'NAME':([0,5,6,7,12,13,14,15,16,],[2,20,20,20,20,20,20,20,20,]),'COMMENT':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[4,-16,17,-4,19,19,19,-12,-13,-14,-15,19,19,19,19,19,-17,-9,-4,-16,-10,17,17,-5,-6,-7,-8,-11,]),'+':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[5,-16,13,-4,5,5,5,-12,-13,-14,-15,5,5,5,5,5,-17,-9,-4,-16,-10,13,13,-5,-6,-7,-8,-11,]),'-':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[6,-16,14,-4,6,6,6,-12,-13,-14,-15,6,6,6,6,6,-17,-9,-4,-16,-10,14,14,-5,-6,-7,-8,-11,]),'(':([0,5,6,7,12,13,14,15,16,],[7,7,7,7,7,7,7,7,7,]),'SCIENTIFIC':([0,5,6,7,12,13,14,15,16,],[8,8,8,8,8,8,8,8,8,]),'FLOAT':([0,5,6,7,12,13,14,15,16,],[9,9,9,9,9,9,9,9,9,]),'NUMBER':([0,5,6,7,12,13,14,15,16,],[10,10,10,10,10,10,10,10,10,]),'NONDECIMAL':([0,5,6,7,12,13,14,15,16,],[11,11,11,11,11,11,11,11,11,]),'$end':([1,2,3,4,8,9,10,11,17,18,19,20,21,23,24,25,26,27,28,],[0,-16,-2,-3,-12,-13,-14,-15,-17,-9,-4,-16,-10,-1,-5,-6,-7,-8,-11,]),'=':([2,],[12,]),'*':([2,3,4,8,9,10,11,17,18,19,20,21,22,23,24,25,26,27,28,],[-16,15,-4,-12,-13,-14,-15,-17,15,-4,-16,-10,15,15,15,15,-7,-8,-11,]),'/':([2,3,4,8,9,10,11,17,18,19,20,21,22,23,24,25,26,27,28,],[-16,16,-4,-12,-13,-14,-15,-17,16,-4,-16,-10,16,16,16,16,-7,-8,-11,]),')':([8,9,10,11,17,18,19,20,21,22,24,25,26,27,28,],[-12,-13,-14,-15,-17,-9,-4,-16,-10,28,-5,-6,-7,-8,-11,]),}
+_lr_action_items = {'NAME':([0,5,6,7,13,14,15,16,17,],[2,20,20,20,20,20,20,20,20,]),'COMMENT':([0,2,3,8,9,10,11,12,18,19,20,21,22,23,24,25,26,27,28,],[4,-16,18,-11,-12,-13,-14,-15,-17,-8,-16,-9,18,18,-4,-5,-6,-7,-10,]),'+':([0,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[5,-16,14,5,5,5,-11,-12,-13,-14,-15,5,5,5,5,5,-17,-8,-16,-9,14,14,-4,-5,-6,-7,-10,]),'-':([0,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[6,-16,15,6,6,6,-11,-12,-13,-14,-15,6,6,6,6,6,-17,-8,-16,-9,15,15,-4,-5,-6,-7,-10,]),'(':([0,5,6,7,13,14,15,16,17,],[7,7,7,7,7,7,7,7,7,]),'SCIENTIFIC':([0,5,6,7,13,14,15,16,17,],[8,8,8,8,8,8,8,8,8,]),'SIN':([0,5,6,7,13,14,15,16,17,],[9,9,9,9,9,9,9,9,9,]),'FLOAT':([0,5,6,7,13,14,15,16,17,],[10,10,10,10,10,10,10,10,10,]),'NUMBER':([0,5,6,7,13,14,15,16,17,],[11,11,11,11,11,11,11,11,11,]),'NONDECIMAL':([0,5,6,7,13,14,15,16,17,],[12,12,12,12,12,12,12,12,12,]),'$end':([1,2,3,4,8,9,10,11,12,18,19,20,21,23,24,25,26,27,28,],[0,-16,-2,-3,-11,-12,-13,-14,-15,-17,-8,-16,-9,-1,-4,-5,-6,-7,-10,]),'=':([2,],[13,]),'*':([2,3,8,9,10,11,12,18,19,20,21,22,23,24,25,26,27,28,],[-16,16,-11,-12,-13,-14,-15,-17,16,-16,-9,16,16,16,16,-6,-7,-10,]),'/':([2,3,8,9,10,11,12,18,19,20,21,22,23,24,25,26,27,28,],[-16,17,-11,-12,-13,-14,-15,-17,17,-16,-9,17,17,17,17,-6,-7,-10,]),')':([8,9,10,11,12,18,19,20,21,22,24,25,26,27,28,],[-11,-12,-13,-14,-15,-17,-8,-16,-9,28,-4,-5,-6,-7,-10,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,5,6,7,12,13,14,15,16,],[3,18,21,22,23,24,25,26,27,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,5,6,7,13,14,15,16,17,],[3,19,21,22,23,24,25,26,27,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,21 +27,21 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> NAME = expression','statement',3,'p_statement_assign','calc.py',81),
-  ('statement -> expression','statement',1,'p_statement_expr','calc.py',86),
-  ('statement -> COMMENT','statement',1,'p_statement_comment','calc.py',91),
-  ('expression -> COMMENT','expression',1,'p_expression_comment','calc.py',95),
-  ('expression -> expression + expression','expression',3,'p_expression_binop','calc.py',99),
-  ('expression -> expression - expression','expression',3,'p_expression_binop','calc.py',100),
-  ('expression -> expression * expression','expression',3,'p_expression_binop','calc.py',101),
-  ('expression -> expression / expression','expression',3,'p_expression_binop','calc.py',102),
-  ('expression -> + expression','expression',2,'p_expression_uplus','calc.py',114),
-  ('expression -> - expression','expression',2,'p_expression_uminus','calc.py',118),
-  ('expression -> ( expression )','expression',3,'p_expression_group','calc.py',123),
-  ('expression -> SCIENTIFIC','expression',1,'p_expression_scientific','calc.py',127),
-  ('expression -> FLOAT','expression',1,'p_expression_float','calc.py',131),
-  ('expression -> NUMBER','expression',1,'p_expression_number','calc.py',135),
-  ('expression -> NONDECIMAL','expression',1,'p_expression_nondecimal','calc.py',139),
-  ('expression -> NAME','expression',1,'p_expression_name','calc.py',144),
-  ('expression -> expression COMMENT','expression',2,'p_expression_comment_same_line','calc.py',152),
+  ('statement -> NAME = expression','statement',3,'p_statement_assign','calc.py',93),
+  ('statement -> expression','statement',1,'p_statement_expr','calc.py',98),
+  ('statement -> COMMENT','statement',1,'p_statement_comment','calc.py',104),
+  ('expression -> expression + expression','expression',3,'p_expression_binop','calc.py',109),
+  ('expression -> expression - expression','expression',3,'p_expression_binop','calc.py',110),
+  ('expression -> expression * expression','expression',3,'p_expression_binop','calc.py',111),
+  ('expression -> expression / expression','expression',3,'p_expression_binop','calc.py',112),
+  ('expression -> + expression','expression',2,'p_expression_uplus','calc.py',124),
+  ('expression -> - expression','expression',2,'p_expression_uminus','calc.py',129),
+  ('expression -> ( expression )','expression',3,'p_expression_group','calc.py',134),
+  ('expression -> SCIENTIFIC','expression',1,'p_expression_scientific','calc.py',139),
+  ('expression -> SIN','expression',1,'p_expression_sin','calc.py',144),
+  ('expression -> FLOAT','expression',1,'p_expression_float','calc.py',148),
+  ('expression -> NUMBER','expression',1,'p_expression_number','calc.py',153),
+  ('expression -> NONDECIMAL','expression',1,'p_expression_nondecimal','calc.py',158),
+  ('expression -> NAME','expression',1,'p_expression_name','calc.py',163),
+  ('expression -> expression COMMENT','expression',2,'p_expression_comment_same_line','calc.py',172),
 ]
