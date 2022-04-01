@@ -10,6 +10,7 @@ import ply.yacc as yacc
 import ply.lex as lex
 import sys
 import math
+from ply.lex import TOKEN
 
 sys.path.insert(0, "../..")
 
@@ -17,22 +18,35 @@ if sys.version_info[0] >= 3:
     raw_input = input
 
 tokens = (
-    'NAME', 'NUMBER', 'COMMENT', 'FLOAT', 'SCIENTIFIC', 'NONDECIMAL', 'SIN'
+    'NAME',
+    'NUMBER',
+    'COMMENT',
+    'FLOAT',
+    'SCIENTIFIC',
+    'NONDECIMAL',
+    'SALTO',
+    'SIN',
+    'EXP',
+    'COS',
+    'LOG'
 )
 
 literals = ['=', '+', '-', '*', '/', '(', ')']
 
 # Tokens
 
-t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
+t_NAME = r'(MEM_)(10|[1-9])'
 
 t_COMMENT = r'%%.*'
 
+t_SIN = r'sin'
 
-def t_SIN(t):
-    r'sin[(][+-]?([0-9]*[.])?[0-9]+[)]'
-    t.value = math.sin(float(t.value[4:len(t.value)-1]))
-    return t
+t_EXP = r'exp'
+
+t_COS = r'cos'
+
+t_LOG = r'log'
+
 
 def t_NONDECIMAL(t):
     r'[0][O|o|X|x]\d+'
@@ -61,12 +75,13 @@ def t_NUMBER(t):
     return t
 
 
-t_ignore = " \t"
-
-
-def t_newline(t):
-    r'\n+'
+def t_SALTO(t):
+    r'[\r\n]+'
     t.lexer.lineno += t.value.count("\n")
+    return t
+
+
+t_ignore = " \t"
 
 
 def t_error(t):
@@ -95,14 +110,40 @@ def p_statement_assign(p):
 
 
 def p_statement_expr(p):
-    'statement : expression'
+    '''statement : expression 
+                 | expression SALTO statement'''
     if p[1] is not None:
         print(p[1])
+
+
+def p_statement_comment_2(p):
+    'statement : COMMENT SALTO statement'
+    pass
 
 
 def p_statement_comment(p):
     'statement : COMMENT'
     pass
+
+
+def p_expression_sin(p):
+    "expression : SIN '(' expression ')'"
+    p[0] = math.sin(p[3])
+
+
+def p_expression_exp(p):
+    "expression : EXP '(' expression ')'"
+    p[0] = math.exp(p[3])
+
+
+def p_expression_cos(p):
+    "expression : COS '(' expression ')'"
+    p[0] = math.cos(p[3])
+
+
+def p_expression_log(p):
+    "expression : LOG '(' expression ')'"
+    p[0] = math.log(p[3])
 
 
 def p_expression_binop(p):
@@ -139,10 +180,6 @@ def p_expression_scientific(p):
     "expression : SCIENTIFIC"
     p[0] = p[1]
 
-
-def p_expression_sin(p):
-    "expression : SIN"
-    p[0] = p[1]
 
 def p_expression_float(p):
     "expression : FLOAT"
@@ -185,23 +222,8 @@ yacc.yacc()
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 fname = "\input.txt"
 
-# try:
-#     f = open(ROOT_DIR + fname, 'r')
-#     # print(f.readlines())
-#     yacc.parse("".join(f.readlines()))
-# except IOError:
-#     print("Archivo no encontrado:", fname)
-
-# Código que funciona
 try:
     f = open(ROOT_DIR + fname, 'r')
+    yacc.parse(f.read())
 except IOError:
     print("Archivo no encontrado:", fname)
-while 1:
-    try:
-        s = f.readline()
-    except EOFError:
-        break
-    if not s:
-        break
-    yacc.parse(s)

@@ -1,5 +1,2 @@
-%% Hola
-1 + .1 + 2.4 %% esta expresion debe resultar 7.8
-%% Hola
-1 + 2 %%hola
-sin(19)
+MEM_1 = 2
+MEM_1

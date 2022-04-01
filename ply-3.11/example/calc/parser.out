@@ -5,44 +5,53 @@ Grammar
 Rule 0     S' -> statement
 Rule 1     statement -> NAME = expression
 Rule 2     statement -> expression
-Rule 3     statement -> COMMENT
-Rule 4     expression -> expression + expression
-Rule 5     expression -> expression - expression
-Rule 6     expression -> expression * expression
-Rule 7     expression -> expression / expression
-Rule 8     expression -> + expression
-Rule 9     expression -> - expression
-Rule 10    expression -> ( expression )
-Rule 11    expression -> SCIENTIFIC
-Rule 12    expression -> SIN
-Rule 13    expression -> FLOAT
-Rule 14    expression -> NUMBER
-Rule 15    expression -> NONDECIMAL
-Rule 16    expression -> NAME
-Rule 17    expression -> expression COMMENT
+Rule 3     statement -> expression SALTO statement
+Rule 4     statement -> COMMENT SALTO statement
+Rule 5     statement -> COMMENT
+Rule 6     expression -> SIN ( expression )
+Rule 7     expression -> EXP ( expression )
+Rule 8     expression -> COS ( expression )
+Rule 9     expression -> LOG ( expression )
+Rule 10    expression -> expression + expression
+Rule 11    expression -> expression - expression
+Rule 12    expression -> expression * expression
+Rule 13    expression -> expression / expression
+Rule 14    expression -> + expression
+Rule 15    expression -> - expression
+Rule 16    expression -> ( expression )
+Rule 17    expression -> SCIENTIFIC
+Rule 18    expression -> FLOAT
+Rule 19    expression -> NUMBER
+Rule 20    expression -> NONDECIMAL
+Rule 21    expression -> NAME
+Rule 22    expression -> expression COMMENT
 
 Terminals, with rules where they appear
 
-(                    : 10
-)                    : 10
-*                    : 6
-+                    : 4 8
--                    : 5 9
-/                    : 7
+(                    : 6 7 8 9 16
+)                    : 6 7 8 9 16
+*                    : 12
++                    : 10 14
+-                    : 11 15
+/                    : 13
 =                    : 1
-COMMENT              : 3 17
-FLOAT                : 13
-NAME                 : 1 16
-NONDECIMAL           : 15
-NUMBER               : 14
-SCIENTIFIC           : 11
-SIN                  : 12
+COMMENT              : 4 5 22
+COS                  : 8
+EXP                  : 7
+FLOAT                : 18
+LOG                  : 9
+NAME                 : 1 21
+NONDECIMAL           : 20
+NUMBER               : 19
+SALTO                : 3 4
+SCIENTIFIC           : 17
+SIN                  : 6
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 4 4 5 5 6 6 7 7 8 9 10 17
-statement            : 0
+expression           : 1 2 3 6 7 8 9 10 10 11 11 12 12 13 13 14 15 16 22
+statement            : 3 4 0
 
 Parsing method: LALR
 
@@ -51,32 +60,40 @@ state 0
     (0) S' -> . statement
     (1) statement -> . NAME = expression
     (2) statement -> . expression
-    (3) statement -> . COMMENT
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (3) statement -> . expression SALTO statement
+    (4) statement -> . COMMENT SALTO statement
+    (5) statement -> . COMMENT
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
     NAME            shift and go to state 2
     COMMENT         shift and go to state 4
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
 
     statement                      shift and go to state 1
     expression                     shift and go to state 3
@@ -90,559 +107,1008 @@ state 1
 state 2
 
     (1) statement -> NAME . = expression
-    (16) expression -> NAME .
+    (21) expression -> NAME .
 
-    =               shift and go to state 13
-    +               reduce using rule 16 (expression -> NAME .)
-    -               reduce using rule 16 (expression -> NAME .)
-    *               reduce using rule 16 (expression -> NAME .)
-    /               reduce using rule 16 (expression -> NAME .)
-    COMMENT         reduce using rule 16 (expression -> NAME .)
-    $end            reduce using rule 16 (expression -> NAME .)
+    =               shift and go to state 16
+    SALTO           reduce using rule 21 (expression -> NAME .)
+    +               reduce using rule 21 (expression -> NAME .)
+    -               reduce using rule 21 (expression -> NAME .)
+    *               reduce using rule 21 (expression -> NAME .)
+    /               reduce using rule 21 (expression -> NAME .)
+    COMMENT         reduce using rule 21 (expression -> NAME .)
+    $end            reduce using rule 21 (expression -> NAME .)
 
 
 state 3
 
     (2) statement -> expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (3) statement -> expression . SALTO statement
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
 
     $end            reduce using rule 2 (statement -> expression .)
-    +               shift and go to state 14
-    -               shift and go to state 15
-    *               shift and go to state 16
-    /               shift and go to state 17
-    COMMENT         shift and go to state 18
+    SALTO           shift and go to state 17
+    +               shift and go to state 18
+    -               shift and go to state 19
+    *               shift and go to state 20
+    /               shift and go to state 21
+    COMMENT         shift and go to state 22
 
 
 state 4
 
-    (3) statement -> COMMENT .
+    (4) statement -> COMMENT . SALTO statement
+    (5) statement -> COMMENT .
 
-    $end            reduce using rule 3 (statement -> COMMENT .)
+    SALTO           shift and go to state 23
+    $end            reduce using rule 5 (statement -> COMMENT .)
 
 
 state 5
 
-    (8) expression -> + . expression
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (6) expression -> SIN . ( expression )
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    (               shift and go to state 24
 
-    expression                     shift and go to state 19
 
 state 6
 
-    (9) expression -> - . expression
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (16) expression -> ( . expression )
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
-    expression                     shift and go to state 21
+    expression                     shift and go to state 25
 
 state 7
 
-    (10) expression -> ( . expression )
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (7) expression -> EXP . ( expression )
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    (               shift and go to state 27
 
-    expression                     shift and go to state 22
 
 state 8
 
-    (11) expression -> SCIENTIFIC .
+    (8) expression -> COS . ( expression )
 
-    +               reduce using rule 11 (expression -> SCIENTIFIC .)
-    -               reduce using rule 11 (expression -> SCIENTIFIC .)
-    *               reduce using rule 11 (expression -> SCIENTIFIC .)
-    /               reduce using rule 11 (expression -> SCIENTIFIC .)
-    COMMENT         reduce using rule 11 (expression -> SCIENTIFIC .)
-    $end            reduce using rule 11 (expression -> SCIENTIFIC .)
-    )               reduce using rule 11 (expression -> SCIENTIFIC .)
+    (               shift and go to state 28
 
 
 state 9
 
-    (12) expression -> SIN .
+    (9) expression -> LOG . ( expression )
 
-    +               reduce using rule 12 (expression -> SIN .)
-    -               reduce using rule 12 (expression -> SIN .)
-    *               reduce using rule 12 (expression -> SIN .)
-    /               reduce using rule 12 (expression -> SIN .)
-    COMMENT         reduce using rule 12 (expression -> SIN .)
-    $end            reduce using rule 12 (expression -> SIN .)
-    )               reduce using rule 12 (expression -> SIN .)
+    (               shift and go to state 29
 
 
 state 10
 
-    (13) expression -> FLOAT .
+    (14) expression -> + . expression
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 13 (expression -> FLOAT .)
-    -               reduce using rule 13 (expression -> FLOAT .)
-    *               reduce using rule 13 (expression -> FLOAT .)
-    /               reduce using rule 13 (expression -> FLOAT .)
-    COMMENT         reduce using rule 13 (expression -> FLOAT .)
-    $end            reduce using rule 13 (expression -> FLOAT .)
-    )               reduce using rule 13 (expression -> FLOAT .)
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
+    expression                     shift and go to state 30
 
 state 11
 
-    (14) expression -> NUMBER .
+    (15) expression -> - . expression
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 14 (expression -> NUMBER .)
-    -               reduce using rule 14 (expression -> NUMBER .)
-    *               reduce using rule 14 (expression -> NUMBER .)
-    /               reduce using rule 14 (expression -> NUMBER .)
-    COMMENT         reduce using rule 14 (expression -> NUMBER .)
-    $end            reduce using rule 14 (expression -> NUMBER .)
-    )               reduce using rule 14 (expression -> NUMBER .)
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
+    expression                     shift and go to state 31
 
 state 12
 
-    (15) expression -> NONDECIMAL .
+    (17) expression -> SCIENTIFIC .
 
-    +               reduce using rule 15 (expression -> NONDECIMAL .)
-    -               reduce using rule 15 (expression -> NONDECIMAL .)
-    *               reduce using rule 15 (expression -> NONDECIMAL .)
-    /               reduce using rule 15 (expression -> NONDECIMAL .)
-    COMMENT         reduce using rule 15 (expression -> NONDECIMAL .)
-    $end            reduce using rule 15 (expression -> NONDECIMAL .)
-    )               reduce using rule 15 (expression -> NONDECIMAL .)
+    SALTO           reduce using rule 17 (expression -> SCIENTIFIC .)
+    +               reduce using rule 17 (expression -> SCIENTIFIC .)
+    -               reduce using rule 17 (expression -> SCIENTIFIC .)
+    *               reduce using rule 17 (expression -> SCIENTIFIC .)
+    /               reduce using rule 17 (expression -> SCIENTIFIC .)
+    COMMENT         reduce using rule 17 (expression -> SCIENTIFIC .)
+    $end            reduce using rule 17 (expression -> SCIENTIFIC .)
+    )               reduce using rule 17 (expression -> SCIENTIFIC .)
 
 
 state 13
 
-    (1) statement -> NAME = . expression
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (18) expression -> FLOAT .
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    SALTO           reduce using rule 18 (expression -> FLOAT .)
+    +               reduce using rule 18 (expression -> FLOAT .)
+    -               reduce using rule 18 (expression -> FLOAT .)
+    *               reduce using rule 18 (expression -> FLOAT .)
+    /               reduce using rule 18 (expression -> FLOAT .)
+    COMMENT         reduce using rule 18 (expression -> FLOAT .)
+    $end            reduce using rule 18 (expression -> FLOAT .)
+    )               reduce using rule 18 (expression -> FLOAT .)
 
-    expression                     shift and go to state 23
 
 state 14
 
-    (4) expression -> expression + . expression
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (19) expression -> NUMBER .
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    SALTO           reduce using rule 19 (expression -> NUMBER .)
+    +               reduce using rule 19 (expression -> NUMBER .)
+    -               reduce using rule 19 (expression -> NUMBER .)
+    *               reduce using rule 19 (expression -> NUMBER .)
+    /               reduce using rule 19 (expression -> NUMBER .)
+    COMMENT         reduce using rule 19 (expression -> NUMBER .)
+    $end            reduce using rule 19 (expression -> NUMBER .)
+    )               reduce using rule 19 (expression -> NUMBER .)
 
-    expression                     shift and go to state 24
 
 state 15
 
-    (5) expression -> expression - . expression
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (20) expression -> NONDECIMAL .
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    SALTO           reduce using rule 20 (expression -> NONDECIMAL .)
+    +               reduce using rule 20 (expression -> NONDECIMAL .)
+    -               reduce using rule 20 (expression -> NONDECIMAL .)
+    *               reduce using rule 20 (expression -> NONDECIMAL .)
+    /               reduce using rule 20 (expression -> NONDECIMAL .)
+    COMMENT         reduce using rule 20 (expression -> NONDECIMAL .)
+    $end            reduce using rule 20 (expression -> NONDECIMAL .)
+    )               reduce using rule 20 (expression -> NONDECIMAL .)
 
-    expression                     shift and go to state 25
 
 state 16
 
-    (6) expression -> expression * . expression
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (1) statement -> NAME = . expression
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
-    expression                     shift and go to state 26
+    expression                     shift and go to state 32
 
 state 17
 
-    (7) expression -> expression / . expression
-    (4) expression -> . expression + expression
-    (5) expression -> . expression - expression
-    (6) expression -> . expression * expression
-    (7) expression -> . expression / expression
-    (8) expression -> . + expression
-    (9) expression -> . - expression
-    (10) expression -> . ( expression )
-    (11) expression -> . SCIENTIFIC
-    (12) expression -> . SIN
-    (13) expression -> . FLOAT
-    (14) expression -> . NUMBER
-    (15) expression -> . NONDECIMAL
-    (16) expression -> . NAME
-    (17) expression -> . expression COMMENT
+    (3) statement -> expression SALTO . statement
+    (1) statement -> . NAME = expression
+    (2) statement -> . expression
+    (3) statement -> . expression SALTO statement
+    (4) statement -> . COMMENT SALTO statement
+    (5) statement -> . COMMENT
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               shift and go to state 5
-    -               shift and go to state 6
-    (               shift and go to state 7
-    SCIENTIFIC      shift and go to state 8
-    SIN             shift and go to state 9
-    FLOAT           shift and go to state 10
-    NUMBER          shift and go to state 11
-    NONDECIMAL      shift and go to state 12
-    NAME            shift and go to state 20
+    NAME            shift and go to state 2
+    COMMENT         shift and go to state 4
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
 
-    expression                     shift and go to state 27
+    expression                     shift and go to state 3
+    statement                      shift and go to state 33
 
 state 18
 
-    (17) expression -> expression COMMENT .
+    (10) expression -> expression + . expression
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 17 (expression -> expression COMMENT .)
-    -               reduce using rule 17 (expression -> expression COMMENT .)
-    *               reduce using rule 17 (expression -> expression COMMENT .)
-    /               reduce using rule 17 (expression -> expression COMMENT .)
-    COMMENT         reduce using rule 17 (expression -> expression COMMENT .)
-    $end            reduce using rule 17 (expression -> expression COMMENT .)
-    )               reduce using rule 17 (expression -> expression COMMENT .)
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
+    expression                     shift and go to state 34
 
 state 19
 
-    (8) expression -> + expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (11) expression -> expression - . expression
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 8 (expression -> + expression .)
-    -               reduce using rule 8 (expression -> + expression .)
-    COMMENT         reduce using rule 8 (expression -> + expression .)
-    $end            reduce using rule 8 (expression -> + expression .)
-    )               reduce using rule 8 (expression -> + expression .)
-    *               shift and go to state 16
-    /               shift and go to state 17
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
-  ! *               [ reduce using rule 8 (expression -> + expression .) ]
-  ! /               [ reduce using rule 8 (expression -> + expression .) ]
-  ! +               [ shift and go to state 14 ]
-  ! -               [ shift and go to state 15 ]
-  ! COMMENT         [ shift and go to state 18 ]
-
+    expression                     shift and go to state 35
 
 state 20
 
-    (16) expression -> NAME .
+    (12) expression -> expression * . expression
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 16 (expression -> NAME .)
-    -               reduce using rule 16 (expression -> NAME .)
-    *               reduce using rule 16 (expression -> NAME .)
-    /               reduce using rule 16 (expression -> NAME .)
-    COMMENT         reduce using rule 16 (expression -> NAME .)
-    $end            reduce using rule 16 (expression -> NAME .)
-    )               reduce using rule 16 (expression -> NAME .)
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
+    expression                     shift and go to state 36
 
 state 21
 
-    (9) expression -> - expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (13) expression -> expression / . expression
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 9 (expression -> - expression .)
-    -               reduce using rule 9 (expression -> - expression .)
-    *               reduce using rule 9 (expression -> - expression .)
-    /               reduce using rule 9 (expression -> - expression .)
-    COMMENT         reduce using rule 9 (expression -> - expression .)
-    $end            reduce using rule 9 (expression -> - expression .)
-    )               reduce using rule 9 (expression -> - expression .)
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
-  ! +               [ shift and go to state 14 ]
-  ! -               [ shift and go to state 15 ]
-  ! *               [ shift and go to state 16 ]
-  ! /               [ shift and go to state 17 ]
-  ! COMMENT         [ shift and go to state 18 ]
-
+    expression                     shift and go to state 37
 
 state 22
 
-    (10) expression -> ( expression . )
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (22) expression -> expression COMMENT .
 
-    )               shift and go to state 28
-    +               shift and go to state 14
-    -               shift and go to state 15
-    *               shift and go to state 16
-    /               shift and go to state 17
-    COMMENT         shift and go to state 18
+    SALTO           reduce using rule 22 (expression -> expression COMMENT .)
+    +               reduce using rule 22 (expression -> expression COMMENT .)
+    -               reduce using rule 22 (expression -> expression COMMENT .)
+    *               reduce using rule 22 (expression -> expression COMMENT .)
+    /               reduce using rule 22 (expression -> expression COMMENT .)
+    COMMENT         reduce using rule 22 (expression -> expression COMMENT .)
+    $end            reduce using rule 22 (expression -> expression COMMENT .)
+    )               reduce using rule 22 (expression -> expression COMMENT .)
 
 
 state 23
 
-    (1) statement -> NAME = expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (4) statement -> COMMENT SALTO . statement
+    (1) statement -> . NAME = expression
+    (2) statement -> . expression
+    (3) statement -> . expression SALTO statement
+    (4) statement -> . COMMENT SALTO statement
+    (5) statement -> . COMMENT
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    $end            reduce using rule 1 (statement -> NAME = expression .)
-    +               shift and go to state 14
-    -               shift and go to state 15
-    *               shift and go to state 16
-    /               shift and go to state 17
-    COMMENT         shift and go to state 18
+    NAME            shift and go to state 2
+    COMMENT         shift and go to state 4
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
 
+    statement                      shift and go to state 38
+    expression                     shift and go to state 3
 
 state 24
 
-    (4) expression -> expression + expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (6) expression -> SIN ( . expression )
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 4 (expression -> expression + expression .)
-    -               reduce using rule 4 (expression -> expression + expression .)
-    COMMENT         reduce using rule 4 (expression -> expression + expression .)
-    $end            reduce using rule 4 (expression -> expression + expression .)
-    )               reduce using rule 4 (expression -> expression + expression .)
-    *               shift and go to state 16
-    /               shift and go to state 17
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
-  ! *               [ reduce using rule 4 (expression -> expression + expression .) ]
-  ! /               [ reduce using rule 4 (expression -> expression + expression .) ]
-  ! +               [ shift and go to state 14 ]
-  ! -               [ shift and go to state 15 ]
-  ! COMMENT         [ shift and go to state 18 ]
-
+    expression                     shift and go to state 39
 
 state 25
 
-    (5) expression -> expression - expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (16) expression -> ( expression . )
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
 
-    +               reduce using rule 5 (expression -> expression - expression .)
-    -               reduce using rule 5 (expression -> expression - expression .)
-    COMMENT         reduce using rule 5 (expression -> expression - expression .)
-    $end            reduce using rule 5 (expression -> expression - expression .)
-    )               reduce using rule 5 (expression -> expression - expression .)
-    *               shift and go to state 16
-    /               shift and go to state 17
-
-  ! *               [ reduce using rule 5 (expression -> expression - expression .) ]
-  ! /               [ reduce using rule 5 (expression -> expression - expression .) ]
-  ! +               [ shift and go to state 14 ]
-  ! -               [ shift and go to state 15 ]
-  ! COMMENT         [ shift and go to state 18 ]
+    )               shift and go to state 40
+    +               shift and go to state 18
+    -               shift and go to state 19
+    *               shift and go to state 20
+    /               shift and go to state 21
+    COMMENT         shift and go to state 22
 
 
 state 26
 
-    (6) expression -> expression * expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (21) expression -> NAME .
 
-    +               reduce using rule 6 (expression -> expression * expression .)
-    -               reduce using rule 6 (expression -> expression * expression .)
-    *               reduce using rule 6 (expression -> expression * expression .)
-    /               reduce using rule 6 (expression -> expression * expression .)
-    COMMENT         reduce using rule 6 (expression -> expression * expression .)
-    $end            reduce using rule 6 (expression -> expression * expression .)
-    )               reduce using rule 6 (expression -> expression * expression .)
-
-  ! +               [ shift and go to state 14 ]
-  ! -               [ shift and go to state 15 ]
-  ! *               [ shift and go to state 16 ]
-  ! /               [ shift and go to state 17 ]
-  ! COMMENT         [ shift and go to state 18 ]
+    )               reduce using rule 21 (expression -> NAME .)
+    +               reduce using rule 21 (expression -> NAME .)
+    -               reduce using rule 21 (expression -> NAME .)
+    *               reduce using rule 21 (expression -> NAME .)
+    /               reduce using rule 21 (expression -> NAME .)
+    COMMENT         reduce using rule 21 (expression -> NAME .)
+    SALTO           reduce using rule 21 (expression -> NAME .)
+    $end            reduce using rule 21 (expression -> NAME .)
 
 
 state 27
 
-    (7) expression -> expression / expression .
-    (4) expression -> expression . + expression
-    (5) expression -> expression . - expression
-    (6) expression -> expression . * expression
-    (7) expression -> expression . / expression
-    (17) expression -> expression . COMMENT
+    (7) expression -> EXP ( . expression )
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 7 (expression -> expression / expression .)
-    -               reduce using rule 7 (expression -> expression / expression .)
-    *               reduce using rule 7 (expression -> expression / expression .)
-    /               reduce using rule 7 (expression -> expression / expression .)
-    COMMENT         reduce using rule 7 (expression -> expression / expression .)
-    $end            reduce using rule 7 (expression -> expression / expression .)
-    )               reduce using rule 7 (expression -> expression / expression .)
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
 
-  ! +               [ shift and go to state 14 ]
-  ! -               [ shift and go to state 15 ]
-  ! *               [ shift and go to state 16 ]
-  ! /               [ shift and go to state 17 ]
-  ! COMMENT         [ shift and go to state 18 ]
-
+    expression                     shift and go to state 41
 
 state 28
 
-    (10) expression -> ( expression ) .
+    (8) expression -> COS ( . expression )
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
 
-    +               reduce using rule 10 (expression -> ( expression ) .)
-    -               reduce using rule 10 (expression -> ( expression ) .)
-    *               reduce using rule 10 (expression -> ( expression ) .)
-    /               reduce using rule 10 (expression -> ( expression ) .)
-    COMMENT         reduce using rule 10 (expression -> ( expression ) .)
-    $end            reduce using rule 10 (expression -> ( expression ) .)
-    )               reduce using rule 10 (expression -> ( expression ) .)
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
+
+    expression                     shift and go to state 42
+
+state 29
+
+    (9) expression -> LOG ( . expression )
+    (6) expression -> . SIN ( expression )
+    (7) expression -> . EXP ( expression )
+    (8) expression -> . COS ( expression )
+    (9) expression -> . LOG ( expression )
+    (10) expression -> . expression + expression
+    (11) expression -> . expression - expression
+    (12) expression -> . expression * expression
+    (13) expression -> . expression / expression
+    (14) expression -> . + expression
+    (15) expression -> . - expression
+    (16) expression -> . ( expression )
+    (17) expression -> . SCIENTIFIC
+    (18) expression -> . FLOAT
+    (19) expression -> . NUMBER
+    (20) expression -> . NONDECIMAL
+    (21) expression -> . NAME
+    (22) expression -> . expression COMMENT
+
+    SIN             shift and go to state 5
+    EXP             shift and go to state 7
+    COS             shift and go to state 8
+    LOG             shift and go to state 9
+    +               shift and go to state 10
+    -               shift and go to state 11
+    (               shift and go to state 6
+    SCIENTIFIC      shift and go to state 12
+    FLOAT           shift and go to state 13
+    NUMBER          shift and go to state 14
+    NONDECIMAL      shift and go to state 15
+    NAME            shift and go to state 26
+
+    expression                     shift and go to state 43
+
+state 30
+
+    (14) expression -> + expression .
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    SALTO           reduce using rule 14 (expression -> + expression .)
+    +               reduce using rule 14 (expression -> + expression .)
+    -               reduce using rule 14 (expression -> + expression .)
+    COMMENT         reduce using rule 14 (expression -> + expression .)
+    $end            reduce using rule 14 (expression -> + expression .)
+    )               reduce using rule 14 (expression -> + expression .)
+    *               shift and go to state 20
+    /               shift and go to state 21
+
+  ! *               [ reduce using rule 14 (expression -> + expression .) ]
+  ! /               [ reduce using rule 14 (expression -> + expression .) ]
+  ! +               [ shift and go to state 18 ]
+  ! -               [ shift and go to state 19 ]
+  ! COMMENT         [ shift and go to state 22 ]
+
+
+state 31
+
+    (15) expression -> - expression .
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    SALTO           reduce using rule 15 (expression -> - expression .)
+    +               reduce using rule 15 (expression -> - expression .)
+    -               reduce using rule 15 (expression -> - expression .)
+    *               reduce using rule 15 (expression -> - expression .)
+    /               reduce using rule 15 (expression -> - expression .)
+    COMMENT         reduce using rule 15 (expression -> - expression .)
+    $end            reduce using rule 15 (expression -> - expression .)
+    )               reduce using rule 15 (expression -> - expression .)
+
+  ! +               [ shift and go to state 18 ]
+  ! -               [ shift and go to state 19 ]
+  ! *               [ shift and go to state 20 ]
+  ! /               [ shift and go to state 21 ]
+  ! COMMENT         [ shift and go to state 22 ]
+
+
+state 32
+
+    (1) statement -> NAME = expression .
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    $end            reduce using rule 1 (statement -> NAME = expression .)
+    +               shift and go to state 18
+    -               shift and go to state 19
+    *               shift and go to state 20
+    /               shift and go to state 21
+    COMMENT         shift and go to state 22
+
+
+state 33
+
+    (3) statement -> expression SALTO statement .
+
+    $end            reduce using rule 3 (statement -> expression SALTO statement .)
+
+
+state 34
+
+    (10) expression -> expression + expression .
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    SALTO           reduce using rule 10 (expression -> expression + expression .)
+    +               reduce using rule 10 (expression -> expression + expression .)
+    -               reduce using rule 10 (expression -> expression + expression .)
+    COMMENT         reduce using rule 10 (expression -> expression + expression .)
+    $end            reduce using rule 10 (expression -> expression + expression .)
+    )               reduce using rule 10 (expression -> expression + expression .)
+    *               shift and go to state 20
+    /               shift and go to state 21
+
+  ! *               [ reduce using rule 10 (expression -> expression + expression .) ]
+  ! /               [ reduce using rule 10 (expression -> expression + expression .) ]
+  ! +               [ shift and go to state 18 ]
+  ! -               [ shift and go to state 19 ]
+  ! COMMENT         [ shift and go to state 22 ]
+
+
+state 35
+
+    (11) expression -> expression - expression .
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    SALTO           reduce using rule 11 (expression -> expression - expression .)
+    +               reduce using rule 11 (expression -> expression - expression .)
+    -               reduce using rule 11 (expression -> expression - expression .)
+    COMMENT         reduce using rule 11 (expression -> expression - expression .)
+    $end            reduce using rule 11 (expression -> expression - expression .)
+    )               reduce using rule 11 (expression -> expression - expression .)
+    *               shift and go to state 20
+    /               shift and go to state 21
+
+  ! *               [ reduce using rule 11 (expression -> expression - expression .) ]
+  ! /               [ reduce using rule 11 (expression -> expression - expression .) ]
+  ! +               [ shift and go to state 18 ]
+  ! -               [ shift and go to state 19 ]
+  ! COMMENT         [ shift and go to state 22 ]
+
+
+state 36
+
+    (12) expression -> expression * expression .
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    SALTO           reduce using rule 12 (expression -> expression * expression .)
+    +               reduce using rule 12 (expression -> expression * expression .)
+    -               reduce using rule 12 (expression -> expression * expression .)
+    *               reduce using rule 12 (expression -> expression * expression .)
+    /               reduce using rule 12 (expression -> expression * expression .)
+    COMMENT         reduce using rule 12 (expression -> expression * expression .)
+    $end            reduce using rule 12 (expression -> expression * expression .)
+    )               reduce using rule 12 (expression -> expression * expression .)
+
+  ! +               [ shift and go to state 18 ]
+  ! -               [ shift and go to state 19 ]
+  ! *               [ shift and go to state 20 ]
+  ! /               [ shift and go to state 21 ]
+  ! COMMENT         [ shift and go to state 22 ]
+
+
+state 37
+
+    (13) expression -> expression / expression .
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    SALTO           reduce using rule 13 (expression -> expression / expression .)
+    +               reduce using rule 13 (expression -> expression / expression .)
+    -               reduce using rule 13 (expression -> expression / expression .)
+    *               reduce using rule 13 (expression -> expression / expression .)
+    /               reduce using rule 13 (expression -> expression / expression .)
+    COMMENT         reduce using rule 13 (expression -> expression / expression .)
+    $end            reduce using rule 13 (expression -> expression / expression .)
+    )               reduce using rule 13 (expression -> expression / expression .)
+
+  ! +               [ shift and go to state 18 ]
+  ! -               [ shift and go to state 19 ]
+  ! *               [ shift and go to state 20 ]
+  ! /               [ shift and go to state 21 ]
+  ! COMMENT         [ shift and go to state 22 ]
+
+
+state 38
+
+    (4) statement -> COMMENT SALTO statement .
+
+    $end            reduce using rule 4 (statement -> COMMENT SALTO statement .)
+
+
+state 39
+
+    (6) expression -> SIN ( expression . )
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    )               shift and go to state 44
+    +               shift and go to state 18
+    -               shift and go to state 19
+    *               shift and go to state 20
+    /               shift and go to state 21
+    COMMENT         shift and go to state 22
+
+
+state 40
+
+    (16) expression -> ( expression ) .
+
+    SALTO           reduce using rule 16 (expression -> ( expression ) .)
+    +               reduce using rule 16 (expression -> ( expression ) .)
+    -               reduce using rule 16 (expression -> ( expression ) .)
+    *               reduce using rule 16 (expression -> ( expression ) .)
+    /               reduce using rule 16 (expression -> ( expression ) .)
+    COMMENT         reduce using rule 16 (expression -> ( expression ) .)
+    $end            reduce using rule 16 (expression -> ( expression ) .)
+    )               reduce using rule 16 (expression -> ( expression ) .)
+
+
+state 41
+
+    (7) expression -> EXP ( expression . )
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    )               shift and go to state 45
+    +               shift and go to state 18
+    -               shift and go to state 19
+    *               shift and go to state 20
+    /               shift and go to state 21
+    COMMENT         shift and go to state 22
+
+
+state 42
+
+    (8) expression -> COS ( expression . )
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    )               shift and go to state 46
+    +               shift and go to state 18
+    -               shift and go to state 19
+    *               shift and go to state 20
+    /               shift and go to state 21
+    COMMENT         shift and go to state 22
+
+
+state 43
+
+    (9) expression -> LOG ( expression . )
+    (10) expression -> expression . + expression
+    (11) expression -> expression . - expression
+    (12) expression -> expression . * expression
+    (13) expression -> expression . / expression
+    (22) expression -> expression . COMMENT
+
+    )               shift and go to state 47
+    +               shift and go to state 18
+    -               shift and go to state 19
+    *               shift and go to state 20
+    /               shift and go to state 21
+    COMMENT         shift and go to state 22
+
+
+state 44
+
+    (6) expression -> SIN ( expression ) .
+
+    SALTO           reduce using rule 6 (expression -> SIN ( expression ) .)
+    +               reduce using rule 6 (expression -> SIN ( expression ) .)
+    -               reduce using rule 6 (expression -> SIN ( expression ) .)
+    *               reduce using rule 6 (expression -> SIN ( expression ) .)
+    /               reduce using rule 6 (expression -> SIN ( expression ) .)
+    COMMENT         reduce using rule 6 (expression -> SIN ( expression ) .)
+    $end            reduce using rule 6 (expression -> SIN ( expression ) .)
+    )               reduce using rule 6 (expression -> SIN ( expression ) .)
+
+
+state 45
+
+    (7) expression -> EXP ( expression ) .
+
+    SALTO           reduce using rule 7 (expression -> EXP ( expression ) .)
+    +               reduce using rule 7 (expression -> EXP ( expression ) .)
+    -               reduce using rule 7 (expression -> EXP ( expression ) .)
+    *               reduce using rule 7 (expression -> EXP ( expression ) .)
+    /               reduce using rule 7 (expression -> EXP ( expression ) .)
+    COMMENT         reduce using rule 7 (expression -> EXP ( expression ) .)
+    $end            reduce using rule 7 (expression -> EXP ( expression ) .)
+    )               reduce using rule 7 (expression -> EXP ( expression ) .)
+
+
+state 46
+
+    (8) expression -> COS ( expression ) .
+
+    SALTO           reduce using rule 8 (expression -> COS ( expression ) .)
+    +               reduce using rule 8 (expression -> COS ( expression ) .)
+    -               reduce using rule 8 (expression -> COS ( expression ) .)
+    *               reduce using rule 8 (expression -> COS ( expression ) .)
+    /               reduce using rule 8 (expression -> COS ( expression ) .)
+    COMMENT         reduce using rule 8 (expression -> COS ( expression ) .)
+    $end            reduce using rule 8 (expression -> COS ( expression ) .)
+    )               reduce using rule 8 (expression -> COS ( expression ) .)
+
+
+state 47
+
+    (9) expression -> LOG ( expression ) .
+
+    SALTO           reduce using rule 9 (expression -> LOG ( expression ) .)
+    +               reduce using rule 9 (expression -> LOG ( expression ) .)
+    -               reduce using rule 9 (expression -> LOG ( expression ) .)
+    *               reduce using rule 9 (expression -> LOG ( expression ) .)
+    /               reduce using rule 9 (expression -> LOG ( expression ) .)
+    COMMENT         reduce using rule 9 (expression -> LOG ( expression ) .)
+    $end            reduce using rule 9 (expression -> LOG ( expression ) .)
+    )               reduce using rule 9 (expression -> LOG ( expression ) .)
 

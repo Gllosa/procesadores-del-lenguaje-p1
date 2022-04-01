@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'left+-left*/rightUMINUSCOMMENT FLOAT NAME NONDECIMAL NUMBER SCIENTIFIC SINstatement : NAME "=" expressionstatement : expressionstatement : COMMENTexpression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expressionexpression : \'+\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : SCIENTIFICexpression : SINexpression : FLOATexpression : NUMBERexpression : NONDECIMALexpression : NAMEexpression : expression COMMENT'
+_lr_signature = 'left+-left*/rightUMINUSCOMMENT COS EXP FLOAT LOG NAME NONDECIMAL NUMBER SALTO SCIENTIFIC SINstatement : NAME "=" expressionstatement : expression \n                 | expression SALTO statementstatement : COMMENT SALTO statementstatement : COMMENTexpression : SIN \'(\' expression \')\'expression : EXP \'(\' expression \')\'expression : COS \'(\' expression \')\'expression : LOG \'(\' expression \')\'expression : expression \'+\' expression\n                  | expression \'-\' expression\n                  | expression \'*\' expression\n                  | expression \'/\' expressionexpression : \'+\' expressionexpression : \'-\' expression %prec UMINUSexpression : \'(\' expression \')\'expression : SCIENTIFICexpression : FLOATexpression : NUMBERexpression : NONDECIMALexpression : NAMEexpression : expression COMMENT'
     
-_lr_action_items = {'NAME':([0,5,6,7,13,14,15,16,17,],[2,20,20,20,20,20,20,20,20,]),'COMMENT':([0,2,3,8,9,10,11,12,18,19,20,21,22,23,24,25,26,27,28,],[4,-16,18,-11,-12,-13,-14,-15,-17,-8,-16,-9,18,18,-4,-5,-6,-7,-10,]),'+':([0,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[5,-16,14,5,5,5,-11,-12,-13,-14,-15,5,5,5,5,5,-17,-8,-16,-9,14,14,-4,-5,-6,-7,-10,]),'-':([0,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,],[6,-16,15,6,6,6,-11,-12,-13,-14,-15,6,6,6,6,6,-17,-8,-16,-9,15,15,-4,-5,-6,-7,-10,]),'(':([0,5,6,7,13,14,15,16,17,],[7,7,7,7,7,7,7,7,7,]),'SCIENTIFIC':([0,5,6,7,13,14,15,16,17,],[8,8,8,8,8,8,8,8,8,]),'SIN':([0,5,6,7,13,14,15,16,17,],[9,9,9,9,9,9,9,9,9,]),'FLOAT':([0,5,6,7,13,14,15,16,17,],[10,10,10,10,10,10,10,10,10,]),'NUMBER':([0,5,6,7,13,14,15,16,17,],[11,11,11,11,11,11,11,11,11,]),'NONDECIMAL':([0,5,6,7,13,14,15,16,17,],[12,12,12,12,12,12,12,12,12,]),'$end':([1,2,3,4,8,9,10,11,12,18,19,20,21,23,24,25,26,27,28,],[0,-16,-2,-3,-11,-12,-13,-14,-15,-17,-8,-16,-9,-1,-4,-5,-6,-7,-10,]),'=':([2,],[13,]),'*':([2,3,8,9,10,11,12,18,19,20,21,22,23,24,25,26,27,28,],[-16,16,-11,-12,-13,-14,-15,-17,16,-16,-9,16,16,16,16,-6,-7,-10,]),'/':([2,3,8,9,10,11,12,18,19,20,21,22,23,24,25,26,27,28,],[-16,17,-11,-12,-13,-14,-15,-17,17,-16,-9,17,17,17,17,-6,-7,-10,]),')':([8,9,10,11,12,18,19,20,21,22,24,25,26,27,28,],[-11,-12,-13,-14,-15,-17,-8,-16,-9,28,-4,-5,-6,-7,-10,]),}
+_lr_action_items = {'NAME':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[2,26,26,26,26,2,26,26,26,26,2,26,26,26,26,]),'COMMENT':([0,2,3,12,13,14,15,17,22,23,25,26,30,31,32,34,35,36,37,39,40,41,42,43,44,45,46,47,],[4,-21,22,-17,-18,-19,-20,4,-22,4,22,-21,-14,-15,22,-10,-11,-12,-13,22,-16,22,22,22,-6,-7,-8,-9,]),'SIN':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,]),'EXP':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,]),'COS':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,]),'LOG':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'+':([0,2,3,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34,35,36,37,39,40,41,42,43,44,45,46,47,],[10,-21,18,10,10,10,-17,-18,-19,-20,10,10,10,10,10,10,-22,10,10,18,-21,10,10,10,-14,-15,18,-10,-11,-12,-13,18,-16,18,18,18,-6,-7,-8,-9,]),'-':([0,2,3,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34,35,36,37,39,40,41,42,43,44,45,46,47,],[11,-21,19,11,11,11,-17,-18,-19,-20,11,11,11,11,11,11,-22,11,11,19,-21,11,11,11,-14,-15,19,-10,-11,-12,-13,19,-16,19,19,19,-6,-7,-8,-9,]),'(':([0,5,6,7,8,9,10,11,16,17,18,19,20,21,23,24,27,28,29,],[6,24,6,27,28,29,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'SCIENTIFIC':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),'FLOAT':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,]),'NUMBER':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,]),'NONDECIMAL':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,]),'$end':([1,2,3,4,12,13,14,15,22,26,30,31,32,33,34,35,36,37,38,40,44,45,46,47,],[0,-21,-2,-5,-17,-18,-19,-20,-22,-21,-14,-15,-1,-3,-10,-11,-12,-13,-4,-16,-6,-7,-8,-9,]),'=':([2,],[16,]),'SALTO':([2,3,4,12,13,14,15,22,26,30,31,34,35,36,37,40,44,45,46,47,],[-21,17,23,-17,-18,-19,-20,-22,-21,-14,-15,-10,-11,-12,-13,-16,-6,-7,-8,-9,]),'*':([2,3,12,13,14,15,22,25,26,30,31,32,34,35,36,37,39,40,41,42,43,44,45,46,47,],[-21,20,-17,-18,-19,-20,-22,20,-21,20,-15,20,20,20,-12,-13,20,-16,20,20,20,-6,-7,-8,-9,]),'/':([2,3,12,13,14,15,22,25,26,30,31,32,34,35,36,37,39,40,41,42,43,44,45,46,47,],[-21,21,-17,-18,-19,-20,-22,21,-21,21,-15,21,21,21,-12,-13,21,-16,21,21,21,-6,-7,-8,-9,]),')':([12,13,14,15,22,25,26,30,31,34,35,36,37,39,40,41,42,43,44,45,46,47,],[-17,-18,-19,-20,-22,40,-21,-14,-15,-10,-11,-12,-13,44,-16,45,46,47,-6,-7,-8,-9,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,5,6,7,13,14,15,16,17,],[3,19,21,22,23,24,25,26,27,]),}
+_lr_goto_items = {'statement':([0,17,23,],[1,33,38,]),'expression':([0,6,10,11,16,17,18,19,20,21,23,24,27,28,29,],[3,25,30,31,32,3,34,35,36,37,3,39,41,42,43,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,21 +27,26 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> NAME = expression','statement',3,'p_statement_assign','calc.py',93),
-  ('statement -> expression','statement',1,'p_statement_expr','calc.py',98),
-  ('statement -> COMMENT','statement',1,'p_statement_comment','calc.py',104),
-  ('expression -> expression + expression','expression',3,'p_expression_binop','calc.py',109),
-  ('expression -> expression - expression','expression',3,'p_expression_binop','calc.py',110),
-  ('expression -> expression * expression','expression',3,'p_expression_binop','calc.py',111),
-  ('expression -> expression / expression','expression',3,'p_expression_binop','calc.py',112),
-  ('expression -> + expression','expression',2,'p_expression_uplus','calc.py',124),
-  ('expression -> - expression','expression',2,'p_expression_uminus','calc.py',129),
-  ('expression -> ( expression )','expression',3,'p_expression_group','calc.py',134),
-  ('expression -> SCIENTIFIC','expression',1,'p_expression_scientific','calc.py',139),
-  ('expression -> SIN','expression',1,'p_expression_sin','calc.py',144),
-  ('expression -> FLOAT','expression',1,'p_expression_float','calc.py',148),
-  ('expression -> NUMBER','expression',1,'p_expression_number','calc.py',153),
-  ('expression -> NONDECIMAL','expression',1,'p_expression_nondecimal','calc.py',158),
-  ('expression -> NAME','expression',1,'p_expression_name','calc.py',163),
-  ('expression -> expression COMMENT','expression',2,'p_expression_comment_same_line','calc.py',172),
+  ('statement -> NAME = expression','statement',3,'p_statement_assign','calc.py',104),
+  ('statement -> expression','statement',1,'p_statement_expr','calc.py',109),
+  ('statement -> expression SALTO statement','statement',3,'p_statement_expr','calc.py',110),
+  ('statement -> COMMENT SALTO statement','statement',3,'p_statement_comment_2','calc.py',116),
+  ('statement -> COMMENT','statement',1,'p_statement_comment','calc.py',121),
+  ('expression -> SIN ( expression )','expression',4,'p_expression_sin','calc.py',126),
+  ('expression -> EXP ( expression )','expression',4,'p_expression_exp','calc.py',131),
+  ('expression -> COS ( expression )','expression',4,'p_expression_cos','calc.py',136),
+  ('expression -> LOG ( expression )','expression',4,'p_expression_log','calc.py',141),
+  ('expression -> expression + expression','expression',3,'p_expression_binop','calc.py',146),
+  ('expression -> expression - expression','expression',3,'p_expression_binop','calc.py',147),
+  ('expression -> expression * expression','expression',3,'p_expression_binop','calc.py',148),
+  ('expression -> expression / expression','expression',3,'p_expression_binop','calc.py',149),
+  ('expression -> + expression','expression',2,'p_expression_uplus','calc.py',161),
+  ('expression -> - expression','expression',2,'p_expression_uminus','calc.py',166),
+  ('expression -> ( expression )','expression',3,'p_expression_group','calc.py',171),
+  ('expression -> SCIENTIFIC','expression',1,'p_expression_scientific','calc.py',176),
+  ('expression -> FLOAT','expression',1,'p_expression_float','calc.py',181),
+  ('expression -> NUMBER','expression',1,'p_expression_number','calc.py',186),
+  ('expression -> NONDECIMAL','expression',1,'p_expression_nondecimal','calc.py',191),
+  ('expression -> NAME','expression',1,'p_expression_name','calc.py',196),
+  ('expression -> expression COMMENT','expression',2,'p_expression_comment_same_line','calc.py',205),
 ]
